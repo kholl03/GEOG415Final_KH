@@ -1,0 +1,34 @@
+#OLS Model: 
+def OLS_regression(x,y):
+    import statsmodels.api as regression
+    x = regression.add_constant(X)
+    model = regression.OLS(y, x).fit()
+    return print(model.summary()) #I like the way this looks compared to not printing the table.
+
+#Regression Scatterplot 
+def regression_plot(x,y,data):
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    sns.regplot(x=x, y=y, data=data, scatter_kws={'alpha':0.5}, line_kws= {'color':'red'})
+    plt.xlabel(x.name)
+    plt.ylabel(y.name)
+    plt.title(f'Scatterplot of {y.name} vs. {x.name}')
+    plt.show()
+
+#residual
+def residual(x,y,data):
+    import statsmodels.api as regression
+    import matplotlib.pyplot as plt
+    x_const = regression.add_constant(x)
+    y_pred = model.predict(x_const)
+    residuals = y - y_pred
+    standardized_residuals = residuals / np.std(residuals)
+    plt.figure(figsize=(8,6))
+    plt.scatter(y_pred, standardized_residuals, alpha = 0.5)
+    plt.axhline(y=0, color='r', linestyle='--', linewidth=2)
+    plt.axhline(y=2, color='g', linestyle='--', linewidth=1)
+    plt.axhline(y=-2, color='g', linestyle='--', linewidth=1)
+    plt.title('Standardized Residuals vs. Fitted Values')
+    plt.xlabel('Fitted Values (Predicted Income Total)')
+    plt.ylabel('Standardized Residuals')
+    plt.show()
